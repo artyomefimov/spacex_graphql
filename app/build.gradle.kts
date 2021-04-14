@@ -30,6 +30,7 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = freeCompilerArgs + "-Xallow-result-return-type"
     }
 }
 
@@ -46,8 +47,12 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:2.1.2")
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.8.0")
     implementation("com.apollographql.apollo:apollo-runtime:2.5.6")
     implementation("com.apollographql.apollo:apollo-coroutines-support:2.5.6")
+    implementation("org.koin:koin-android:3.0.0-alpha-1")
+    implementation("org.koin:koin-android-ext:3.0.0-alpha-1")
+    implementation("org.koin:koin-android-viewmodel:3.0.0-alpha-1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")

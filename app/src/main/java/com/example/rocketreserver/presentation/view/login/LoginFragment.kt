@@ -1,4 +1,4 @@
-package com.example.rocketreserver
+package com.example.rocketreserver.presentation.view.login
 
 import android.os.Bundle
 import android.util.Patterns
@@ -10,6 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
+import com.example.rocketreserver.LoginMutation
+import com.example.rocketreserver.R
+import com.example.rocketreserver.User
 import com.example.rocketreserver.data.api.apolloClient
 import com.example.rocketreserver.databinding.LoginFragmentBinding
 

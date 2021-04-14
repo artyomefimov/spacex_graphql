@@ -4,14 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.rocketreserver.LaunchListQuery
 import com.example.rocketreserver.R
 import com.example.rocketreserver.databinding.LaunchItemBinding
+import com.example.rocketreserver.domain.model.LaunchList
+import com.example.rocketreserver.domain.model.LaunchListElement
 
 class LaunchListAdapter(
-    val launches: MutableList<LaunchListQuery.Launch>,
+    val launches: MutableList<LaunchListElement>,
     private val onEndOfListReached: () -> Unit,
-    private val onItemClicked: (LaunchListQuery.Launch) -> Unit
+    private val onItemClicked: (LaunchListElement) -> Unit
 ) : RecyclerView.Adapter<LaunchListViewHolder>() {
 
     override fun getItemCount() = launches.size
@@ -31,14 +32,14 @@ class LaunchListAdapter(
 
 class LaunchListViewHolder(
     private val binding: LaunchItemBinding,
-    private val onItemClicked: (LaunchListQuery.Launch) -> Unit
+    private val onItemClicked: (LaunchListElement) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(launch: LaunchListQuery.Launch) {
+    fun bind(launch: LaunchListElement) {
         with(binding) {
-            site.text = launch.site.orEmpty()
-            missionName.text = launch.mission?.name.orEmpty()
-            missionPatch.load(launch.mission?.missionPatch.orEmpty()) {
+            site.text = launch.site
+            missionName.text = launch.missionName
+            missionPatch.load(launch.missionPatch) {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }

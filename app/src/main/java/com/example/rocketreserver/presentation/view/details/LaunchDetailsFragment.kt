@@ -1,4 +1,4 @@
-package com.example.rocketreserver
+package com.example.rocketreserver.presentation.view.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
+import com.example.rocketreserver.*
 import com.example.rocketreserver.data.api.apolloClient
 import com.example.rocketreserver.databinding.LaunchDetailsFragmentBinding
 
