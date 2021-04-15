@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rocketreserver.databinding.LaunchListFragmentBinding
 import com.example.rocketreserver.domain.model.LaunchListElement
+import com.example.rocketreserver.presentation.ext.collectEvent
 import com.example.rocketreserver.presentation.viewmodel.list.LaunchesListViewModel
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -49,10 +50,10 @@ class LaunchListFragment : Fragment() {
             viewModel.launchesState().collect(::showLaunches)
         }
         lifecycleScope.launchWhenResumed {
-            viewModel.loadingState().collect(::showLoading)
+            viewModel.errorState().collect(::showError)
         }
         lifecycleScope.launchWhenResumed {
-            viewModel.errorState().collect(::showError)
+            viewModel.loadingState().collect(::showLoading)
         }
     }
 
@@ -74,9 +75,9 @@ class LaunchListFragment : Fragment() {
 
     private fun showError(hasError: Boolean) {
         with(binding) {
-            errorView.isInvisible = hasError.not()
-            progressBar.isInvisible = hasError
-            launchesRecyclerView.isInvisible = hasError
+            errorView.isVisible = hasError
+            progressBar.isVisible = hasError.not()
+            launchesRecyclerView.isVisible = hasError.not()
         }
     }
 }

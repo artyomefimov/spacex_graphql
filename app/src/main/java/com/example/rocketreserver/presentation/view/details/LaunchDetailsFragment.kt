@@ -39,9 +39,9 @@ class LaunchDetailsFragment : Fragment() {
             viewModel.performBookOperation()
         }
         lifecycleScope.launchWhenResumed { viewModel.launchDetailsState().collect(::showLaunchDetails) }
+        lifecycleScope.launchWhenResumed { viewModel.errorState().collect(::showError) }
         lifecycleScope.launchWhenResumed { viewModel.loadingState().collect(::showLoading) }
         lifecycleScope.launchWhenResumed { viewModel.buttonLoadingState().collect(::showButtonLoading) }
-        lifecycleScope.launchWhenResumed { viewModel.errorState().collect(::showError) }
         lifecycleScope.launchWhenResumed { viewModel.buttonTextState().collect(::showButtonText) }
         lifecycleScope.launchWhenResumed { viewModel.rocketInfoState().collect(::showRocketInfo) }
         lifecycleScope.launchWhenResumed {
@@ -78,9 +78,9 @@ class LaunchDetailsFragment : Fragment() {
 
     private fun showError(hasError: Boolean) {
         with(binding) {
-            errorView.isInvisible = hasError.not()
-            progressBar.isInvisible = hasError
-            contentGroup.isInvisible = hasError
+            errorView.isVisible = hasError
+            progressBar.isVisible = hasError.not()
+            contentGroup.isVisible = hasError.not()
         }
     }
 
