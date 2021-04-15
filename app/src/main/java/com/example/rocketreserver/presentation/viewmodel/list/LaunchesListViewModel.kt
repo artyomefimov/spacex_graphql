@@ -32,6 +32,7 @@ class LaunchesListViewModel(
     fun loadLaunches() {
         if (hasMore) {
             viewModelScope.launch {
+                errorState.value = false
                 loadingState.value = true
                 interactor.getLaunches(cursor).collect(
                     onSuccess = { result ->

@@ -33,7 +33,6 @@ class LaunchListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.errorView.onRetryClicked = {
-            binding.errorView.isInvisible = true
             viewModel.loadLaunches()
         }
         adapter = LaunchListAdapter(

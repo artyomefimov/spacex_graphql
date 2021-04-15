@@ -1,6 +1,5 @@
 package com.example.rocketreserver.presentation.viewmodel.details
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rocketreserver.R
@@ -61,6 +60,7 @@ class LaunchDetailsViewModel(
 
     private fun loadLaunchDetails() {
         viewModelScope.launch {
+            errorState.value = false
             loadingState.value = true
             interactor.getLaunchDetails(launchId).collect(
                 onSuccess = { result ->

@@ -25,6 +25,9 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.errorView.onRetryClicked = {
+            viewModel.performLogin(binding.email.text?.toString().orEmpty())
+        }
         binding.submitButton.apply {
             buttonText = resources.getString(R.string.submit)
             onClickListener = {

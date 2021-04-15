@@ -35,6 +35,7 @@ class LoginViewModel(
         }
 
         viewModelScope.launch {
+            errorState.value = false
             buttonLoadingState.value = true
             interactor.performLogin(email).collect(
                 onSuccess = { result ->
