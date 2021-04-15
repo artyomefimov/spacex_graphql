@@ -31,8 +31,10 @@ class TokenStorageImpl(
     }
 
     override fun setToken(token: String) {
-        preferences.edit {
-            putString(KEY_TOKEN, token)
-        }
+        preferences.edit { putString(KEY_TOKEN, token) }
+    }
+
+    override fun removeToken() {
+        preferences.edit { remove(KEY_TOKEN) }
     }
 }

@@ -6,6 +6,7 @@
     android:id="@+id/main_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".presentation.view.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:title="@string/app_name"
-        android:titleTextColor="@android:color/white"
+        app:titleTextColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -1,7 +1,10 @@
 package com.example.rocketreserver.presentation.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -13,6 +16,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.coroutines.toFlow
 import com.example.rocketreserver.R
 import com.example.rocketreserver.TripsBookedSubscription
+import com.example.rocketreserver.data.token.TokenStorage
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -20,14 +24,21 @@ import kotlinx.coroutines.flow.retryWhen
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var appBarConfiguration : AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private val apolloClient by inject<ApolloClient>()
+    private val tokenStorage by inject<TokenStorage>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setupToolbar()
+        tokenStorage.removeToken()
 
         lifecycleScope.launchWhenResumed {
             apolloClient.subscribe(TripsBookedSubscription()).toFlow()
@@ -53,6 +64,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp(appBarConfiguration)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.changeThemeItem) {
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            recreate()
+        }
+        return true
     }
 
     private fun setupToolbar() {

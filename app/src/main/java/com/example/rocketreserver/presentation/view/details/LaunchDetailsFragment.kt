@@ -49,9 +49,7 @@ class LaunchDetailsFragment : Fragment() {
         lifecycleScope.launchWhenResumed { viewModel.rocketInfoState().collect(::showRocketInfo) }
         lifecycleScope.launchWhenResumed {
             viewModel.navigateEventState().collectEvent {
-                findNavController().navigate(
-                    R.id.open_login
-                )
+                findNavController().navigate(R.id.open_login)
             }
         }
     }

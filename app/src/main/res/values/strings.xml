@@ -12,4 +12,5 @@
     <string name="tripCancelled">A trip has been cancelled</string>
     <string name="subscriptionError">Oops, something wrong happened</string>
     <string name="rocketName">🚀 %1$s %2$s</string>
+    <string name="changeTheme">Change theme</string>
 </resources>

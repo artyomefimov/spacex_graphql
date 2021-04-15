@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="52dp"
-    android:background="@color/colorPrimary"
+    tools:background="@color/colorPrimary"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:textColor="@color/design_default_color_on_primary"
+        android:textColor="@color/textColor"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:indeterminateTint="@color/design_default_color_on_primary"
+        android:indeterminateTint="@color/textColor"
         app:layout_constraintBottom_toBottomOf="@id/buttonTextView"
         app:layout_constraintEnd_toEndOf="@id/buttonTextView"
         app:layout_constraintStart_toStartOf="@id/buttonTextView"

@@ -5,4 +5,6 @@ interface TokenStorage {
     fun getToken(): String
 
     fun setToken(token: String)
+
+    fun removeToken()
 }

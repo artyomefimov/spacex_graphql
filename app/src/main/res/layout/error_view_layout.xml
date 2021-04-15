@@ -18,7 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_sadsmile" />
+        app:srcCompat="@drawable/ic_sadsmile"
+        app:tint="@color/primaryTextColor"/>
 
     <TextView
         android:id="@+id/errorTextView"
@@ -28,6 +29,7 @@
         android:gravity="center"
         android:text="@string/oh_no"
         android:textSize="16sp"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toTopOf="@id/retryButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +44,7 @@
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/retry"
-        android:textColor="@android:color/white"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
