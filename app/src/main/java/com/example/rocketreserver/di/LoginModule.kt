@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 fun loginModule() = module {
     single<LoginInteractor> { LoginInteractorImpl(repository = get(), tokenStorage = get()) }
-    viewModel { LoginViewModel(interactor = get(), context = get()) }
+    viewModel { LoginViewModel(interactor = get(), resourcesProvider = get()) }
 }

@@ -9,13 +9,14 @@ import com.example.rocketreserver.domain.interactor.details.LaunchDetailsInterac
 import com.example.rocketreserver.domain.model.LaunchDetails
 import com.example.rocketreserver.domain.model.Rocket
 import com.example.rocketreserver.presentation.model.Event
+import com.example.rocketreserver.presentation.resources.ResourcesProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LaunchDetailsViewModel(
     private val interactor: LaunchDetailsInteractor,
-    private val context: Context
+    private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
 
     private val launchDetailsState = MutableStateFlow<LaunchDetails?>(null)
@@ -77,15 +78,18 @@ class LaunchDetailsViewModel(
     }
 
     private fun resolveRocketInfo(rocket: Rocket) {
-        rocketInfoState.value = context.getString(R.string.rocketName)
-            .format(rocket.name, rocket.type)
+        rocketInfoState.value = resourcesProvider.getString(
+            R.string.rocketName,
+            rocket.name,
+            rocket.type
+        )
     }
 
     private fun resolveButtonText(isBooked: Boolean) {
         buttonTextState.value = if (isBooked) {
-            context.getString(R.string.cancel)
+            resourcesProvider.getString(R.string.cancel)
         } else {
-            context.getString(R.string.book_now)
+            resourcesProvider.getString(R.string.book_now)
         }
     }
 

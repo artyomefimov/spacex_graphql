@@ -8,13 +8,14 @@ import com.example.rocketreserver.R
 import com.example.rocketreserver.domain.ext.collect
 import com.example.rocketreserver.domain.interactor.login.LoginInteractor
 import com.example.rocketreserver.presentation.model.Event
+import com.example.rocketreserver.presentation.resources.ResourcesProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val interactor: LoginInteractor,
-    private val context: Context
+    private val resourcesProvider: ResourcesProvider
 ): ViewModel() {
 
     private val errorTextState = MutableStateFlow("")
@@ -29,7 +30,7 @@ class LoginViewModel(
 
     fun performLogin(email: String) {
         if (notValidEmail(email)) {
-            errorTextState.value = context.getString(R.string.invalid_email)
+            errorTextState.value = resourcesProvider.getString(R.string.invalid_email)
             return
         }
 

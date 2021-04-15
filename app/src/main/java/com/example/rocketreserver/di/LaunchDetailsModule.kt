@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 fun launchDetailsModule() = module {
     single<LaunchDetailsInteractor> { LaunchDetailsInteractorImpl(repository = get()) }
-    viewModel { LaunchDetailsViewModel(interactor = get(), context = get()) }
+    viewModel { LaunchDetailsViewModel(interactor = get(), resourcesProvider = get()) }
 }
