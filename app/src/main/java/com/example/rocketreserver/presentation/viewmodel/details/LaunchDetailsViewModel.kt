@@ -24,7 +24,7 @@ class LaunchDetailsViewModel(
     private val errorState = MutableStateFlow(false)
     private val buttonTextState = MutableStateFlow("")
     private val rocketInfoState = MutableStateFlow("")
-    private val navigateEventState = MutableStateFlow(Event<Unit>(null))
+    private val navigateEventState = MutableStateFlow(Event<Unit?>(null))
 
     private var isBooked = false
         set(value) {
@@ -47,7 +47,7 @@ class LaunchDetailsViewModel(
 
     fun performBookOperation() {
         val token = interactor.getToken()
-        if (token == null) {
+        if (token.isEmpty()) {
             navigateEventState.value = Event(Unit)
         } else {
             if (isBooked) {

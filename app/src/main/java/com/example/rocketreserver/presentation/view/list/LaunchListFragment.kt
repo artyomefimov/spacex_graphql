@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -66,8 +67,8 @@ class LaunchListFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         with(binding) {
-            progressBar.isInvisible = isLoading.not()
-            launchesRecyclerView.isInvisible = isLoading
+            progressBar.isVisible = isLoading
+            launchesRecyclerView.isVisible = isLoading.not()
         }
     }
 

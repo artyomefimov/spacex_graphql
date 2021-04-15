@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -34,7 +35,7 @@ class LaunchDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.launchId = args.launchId
-        binding.bookButton.setOnClickListener {
+        binding.bookButton.onClickListener = {
             viewModel.performBookOperation()
         }
         lifecycleScope.launchWhenResumed { viewModel.launchDetailsState().collect(::showLaunchDetails) }
@@ -66,16 +67,13 @@ class LaunchDetailsFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         with(binding) {
-            progressBar.isInvisible = isLoading.not()
-            contentGroup.isInvisible = isLoading
+            progressBar.isVisible = isLoading
+            contentGroup.isVisible = isLoading.not()
         }
     }
 
     private fun showButtonLoading(isLoading: Boolean) {
-        with(binding) {
-            bookButton.isInvisible = isLoading
-            bookProgressBar.isInvisible = isLoading.not()
-        }
+        binding.bookButton.isLoading = isLoading
     }
 
     private fun showError(hasError: Boolean) {
@@ -87,7 +85,7 @@ class LaunchDetailsFragment : Fragment() {
     }
 
     private fun showButtonText(text: String) {
-        binding.bookButton.text = text
+        binding.bookButton.buttonText = text
     }
 
     private fun showRocketInfo(rocketInfo: String) {

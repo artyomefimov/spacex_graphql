@@ -66,29 +66,18 @@
         app:layout_constraintTop_toBottomOf="@id/rocketName"
         tools:text="Site" />
 
-    <Button
+    <com.example.rocketreserver.presentation.view.LoadingButton
         android:id="@+id/bookButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/missionPatch"
-        tools:text="book now" />
-
-    <ProgressBar
-        android:id="@+id/bookProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/bookButton"
-        app:layout_constraintEnd_toEndOf="@id/bookButton"
-        app:layout_constraintStart_toStartOf="@id/bookButton"
-        app:layout_constraintTop_toTopOf="@id/bookButton" />
+        app:layout_constraintTop_toBottomOf="@id/missionPatch" />
 
     <ProgressBar
         android:id="@+id/progressBar"

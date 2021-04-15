@@ -6,4 +6,6 @@ import com.example.rocketreserver.domain.model.result.ResultWrapper
 interface LoginInteractor {
 
     suspend fun performLogin(login: String): ResultWrapper<LoginDetails>
+
+    fun setToken(login: String)
 }

@@ -1,16 +1,23 @@
 package com.example.rocketreserver.presentation.view.login
 
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.rocketreserver.R
 import com.example.rocketreserver.databinding.LoginFragmentBinding
+import com.example.rocketreserver.presentation.ext.collectEvent
+import com.example.rocketreserver.presentation.viewmodel.login.LoginViewModel
+import kotlinx.coroutines.flow.collect
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
     private lateinit var binding: LoginFragmentBinding
+    private val viewModel by viewModel<LoginViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LoginFragmentBinding.inflate(inflater, container, false)
@@ -18,32 +25,34 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.submitProgressBar.visibility = View.GONE
-        binding.submit.setOnClickListener {
-            val email = binding.email.text.toString()
-            if (Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
-                binding.emailLayout.error = getString(R.string.invalid_email)
-                return@setOnClickListener
+        binding.submitButton.apply {
+            buttonText = resources.getString(R.string.submit)
+            onClickListener = {
+                viewModel.performLogin(binding.email.text?.toString().orEmpty())
             }
-            binding.submitProgressBar.visibility = View.VISIBLE
-            binding.submit.visibility = View.GONE
-//            lifecycleScope.launchWhenResumed {
-//                val response = try {
-//                    apolloClient(requireContext()).mutate(LoginMutation(email = Input.fromNullable(email))).await()
-//                } catch (e: Exception) {
-//                    null
-//                }
-//
-//                val login = response?.data?.login
-//                if (login == null || response.hasErrors()) {
-//                    binding.submitProgressBar.visibility = View.GONE
-//                    binding.submit.visibility = View.VISIBLE
-//                    return@launchWhenResumed
-//                }
-//
-//                User.setToken(requireContext(), login)
-//                findNavController().popBackStack()
-//            }
         }
+        lifecycleScope.launchWhenResumed { viewModel.errorTextState().collect(::showErrorText) }
+        lifecycleScope.launchWhenResumed { viewModel.errorState().collect(::showError) }
+        lifecycleScope.launchWhenResumed { viewModel.buttonLoadingState().collect(::showButtonLoading) }
+        lifecycleScope.launchWhenResumed {
+            viewModel.navigateEventState().collectEvent {
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    private fun showErrorText(errorText: String) {
+        binding.emailLayout.error = errorText
+    }
+
+    private fun showError(hasError: Boolean) {
+        with(binding) {
+            errorView.isVisible = hasError
+            contentGroup.isVisible = hasError.not()
+        }
+    }
+
+    private fun showButtonLoading(isLoading: Boolean) {
+        binding.submitButton.isLoading = isLoading
     }
 }

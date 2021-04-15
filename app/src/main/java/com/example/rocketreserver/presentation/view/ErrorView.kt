@@ -19,6 +19,6 @@ class ErrorView @JvmOverloads constructor(
     var onRetryClicked: (() -> Unit)? = null
 
     init {
-        binding.retryButton.setOnClickListener { onRetryClicked }
+        binding.retryButton.setOnClickListener { onRetryClicked?.invoke() }
     }
 }

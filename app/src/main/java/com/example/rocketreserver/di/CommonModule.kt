@@ -15,7 +15,7 @@ import org.koin.dsl.module
 
 private const val LAUNCH_LIST_MAPPER = "LAUNCH_LIST_MAPPER"
 private const val LAUNCH_DETAILS_MAPPER = "LAUNCH_DETAILS_MAPPER"
-private const val LOGIN_DETAILS_MAPPER = "LAUNCH_DETAILS_MAPPER"
+private const val LOGIN_DETAILS_MAPPER = "LOGIN_DETAILS_MAPPER"
 
 fun repositoryModule() = module {
     single(qualifier = named(LAUNCH_LIST_MAPPER)) {
