@@ -4,102 +4,93 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.apollographql.apollo.coroutines.await
-import com.apollographql.apollo.exception.ApolloException
-import com.example.rocketreserver.*
-import com.example.rocketreserver.data.api.apolloClient
+import com.example.rocketreserver.R
 import com.example.rocketreserver.databinding.LaunchDetailsFragmentBinding
+import com.example.rocketreserver.domain.model.LaunchDetails
+import com.example.rocketreserver.presentation.ext.collectEvent
+import com.example.rocketreserver.presentation.viewmodel.details.LaunchDetailsViewModel
+import kotlinx.coroutines.flow.collect
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LaunchDetailsFragment : Fragment() {
-
     private lateinit var binding: LaunchDetailsFragmentBinding
-    val args: LaunchDetailsFragmentArgs by navArgs()
+    private val args: LaunchDetailsFragmentArgs by navArgs()
+    private val viewModel by viewModel<LaunchDetailsViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = LaunchDetailsFragmentBinding.inflate(inflater)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.launchId = args.launchId
+        binding.bookButton.setOnClickListener {
+            viewModel.performBookOperation()
+        }
+        lifecycleScope.launchWhenResumed { viewModel.launchDetailsState().collect(::showLaunchDetails) }
+        lifecycleScope.launchWhenResumed { viewModel.loadingState().collect(::showLoading) }
+        lifecycleScope.launchWhenResumed { viewModel.buttonLoadingState().collect(::showButtonLoading) }
+        lifecycleScope.launchWhenResumed { viewModel.errorState().collect(::showError) }
+        lifecycleScope.launchWhenResumed { viewModel.buttonTextState().collect(::showButtonText) }
+        lifecycleScope.launchWhenResumed { viewModel.rocketInfoState().collect(::showRocketInfo) }
         lifecycleScope.launchWhenResumed {
-            binding.bookButton.isVisible = false
-            binding.bookProgressBar.isVisible = false
-            binding.progressBar.isVisible = true
-            binding.error.isVisible = false
-            runCatching {
-                apolloClient(requireContext()).query(LaunchDetailsQuery(id = args.launchId)).await()
-            }.onSuccess { response ->
-                val launch = response.data?.launch
-                if (launch == null || response.hasErrors()) {
-                    binding.progressBar.isVisible = false
-                    binding.error.text = response.errors?.get(0)?.message
-                    binding.error.isVisible = true
-                    return@launchWhenResumed
-                }
-
-                binding.progressBar.isVisible = false
-
-                binding.missionPatch.load(launch.mission?.missionPatch) {
-                    placeholder(R.drawable.ic_placeholder)
-                }
-                binding.site.text = launch.site
-                binding.missionName.text = launch.mission?.name
-                val rocket = launch.rocket
-                binding.rocketName.text = "🚀 ${rocket?.name} ${rocket?.type}"
-
-                val mutation = if (launch.isBooked) {
-                    CancelTripMutation(id = args.launchId)
-                } else {
-                    BookTripMutation(id = args.launchId)
-                }
-                val bookingResponse = try {
-                    apolloClient(requireContext()).mutate(mutation).await()
-                } catch (e: ApolloException) {
-                    configureButton(launch.isBooked)
-                    return@launchWhenResumed
-                }
-
-                if (bookingResponse.hasErrors()) {
-                    configureButton(launch.isBooked)
-                    return@launchWhenResumed
-                }
-                configureButton(launch.isBooked.not())
-            }.onFailure {
-                if (it is ApolloException) {
-                    binding.progressBar.visibility = View.GONE
-                    binding.error.text = "Oh no... A protocol error happened"
-                    binding.error.visibility = View.VISIBLE
-                    return@launchWhenResumed
-                }
+            viewModel.navigateEventState().collectEvent {
+                findNavController().navigate(
+                    R.id.open_login
+                )
             }
         }
     }
 
-    private fun configureButton(isBooked: Boolean) {
-        binding.bookButton.visibility = View.VISIBLE
-        binding.bookProgressBar.visibility = View.GONE
-
-        binding.bookButton.text = if (isBooked) {
-            getString(R.string.cancel)
-        } else {
-            getString(R.string.book_now)
-        }
-
-        binding.bookButton.setOnClickListener {
-            val context = context
-            if (context != null && User.getToken(context) == null) {
-                findNavController().navigate(
-                    R.id.open_login
-                )
-                return@setOnClickListener
+    private fun showLaunchDetails(details: LaunchDetails?) {
+        details ?: return
+        with(binding) {
+            missionPatch.load(details.missionPatch) {
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
             }
+            site.text = details.site
+            missionName.text = details.missionName
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        with(binding) {
+            progressBar.isInvisible = isLoading.not()
+            contentGroup.isInvisible = isLoading
+        }
+    }
+
+    private fun showButtonLoading(isLoading: Boolean) {
+        with(binding) {
+            bookButton.isInvisible = isLoading
+            bookProgressBar.isInvisible = isLoading.not()
+        }
+    }
+
+    private fun showError(hasError: Boolean) {
+        with(binding) {
+            errorView.isInvisible = hasError.not()
+            progressBar.isInvisible = hasError
+            contentGroup.isInvisible = hasError
+        }
+    }
+
+    private fun showButtonText(text: String) {
+        binding.bookButton.text = text
+    }
+
+    private fun showRocketInfo(rocketInfo: String) {
+        binding.rocketName.text = rocketInfo
     }
 }

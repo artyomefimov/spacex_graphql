@@ -1,25 +1,27 @@
 package com.example.rocketreserver.presentation.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.coroutines.toFlow
 import com.example.rocketreserver.R
 import com.example.rocketreserver.TripsBookedSubscription
-import com.example.rocketreserver.data.api.apolloClient
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.retryWhen
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
+    private val apolloClient by inject<ApolloClient>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         lifecycleScope.launchWhenResumed {
-            apolloClient(this@MainActivity).subscribe(TripsBookedSubscription()).toFlow()
+            apolloClient.subscribe(TripsBookedSubscription()).toFlow()
                 .retryWhen { _, attempt ->
                     delay(attempt * 1000)
                     true

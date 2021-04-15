@@ -53,7 +53,6 @@ class LaunchListFragment : Fragment() {
         lifecycleScope.launchWhenResumed {
             viewModel.errorState().collect(::showError)
         }
-        viewModel.loadLaunches()
     }
 
     override fun onDestroyView() {

@@ -12,7 +12,7 @@ private const val BASE_URL = "https://apollo-fullstack-tutorial.herokuapp.com/"
 private const val WEB_SOCKET_URL = "wss://apollo-fullstack-tutorial.herokuapp.com/graphql"
 
 fun networkModule() = module {
-    single { AuthorizationInterceptor(context = get()) }
+    single { AuthorizationInterceptor(tokenStorage = get()) }
     single { HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY } }
     single {
         OkHttpClient.Builder()

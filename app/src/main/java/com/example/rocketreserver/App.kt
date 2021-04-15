@@ -4,10 +4,7 @@ import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.util.DebugLogger
-import com.example.rocketreserver.di.interactorModule
-import com.example.rocketreserver.di.launchListModule
-import com.example.rocketreserver.di.networkModule
-import com.example.rocketreserver.di.repositoryModule
+import com.example.rocketreserver.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -24,7 +21,8 @@ class App : Application(), ImageLoaderFactory {
                     networkModule(),
                     repositoryModule(),
                     interactorModule(),
-                    launchListModule()
+                    launchListModule(),
+                    launchDetailsModule()
                 )
             )
         }

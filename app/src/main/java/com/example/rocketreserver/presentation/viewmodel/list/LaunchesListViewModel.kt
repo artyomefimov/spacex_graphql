@@ -19,6 +19,10 @@ class LaunchesListViewModel(
     private var cursor: String? = null
     private var hasMore: Boolean = true
 
+    init {
+        loadLaunches()
+    }
+
     fun launchesState(): StateFlow<List<LaunchListElement>> = launchesState
     fun loadingState(): StateFlow<Boolean> = loadingState
     fun errorState(): StateFlow<Boolean> = errorState

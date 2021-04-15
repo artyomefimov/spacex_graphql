@@ -4,6 +4,8 @@ import com.example.rocketreserver.data.mapper.LaunchDetailsMapper
 import com.example.rocketreserver.data.mapper.LaunchListMapper
 import com.example.rocketreserver.data.mapper.LoginDetailsMapper
 import com.example.rocketreserver.data.repository.SpaceXRepositoryImpl
+import com.example.rocketreserver.data.token.TokenStorage
+import com.example.rocketreserver.data.token.TokenStorageImpl
 import com.example.rocketreserver.domain.mapper.Mapper
 import com.example.rocketreserver.domain.repository.SpaceXRepository
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +27,7 @@ fun repositoryModule() = module {
     single(qualifier = named(LOGIN_DETAILS_MAPPER)) {
         LoginDetailsMapper()
     } bind Mapper::class
+    single<TokenStorage> { TokenStorageImpl(context = get()) }
     single<SpaceXRepository> {
         SpaceXRepositoryImpl(
             dispatcher = Dispatchers.IO,
@@ -32,6 +35,7 @@ fun repositoryModule() = module {
             launchListMapper = get(qualifier = named(LAUNCH_LIST_MAPPER)),
             listDetailsMapper = get(qualifier = named(LAUNCH_DETAILS_MAPPER)),
             loginDetailsMapper = get(qualifier = named(LOGIN_DETAILS_MAPPER)),
+            tokenStorage = get()
         )
     }
 }

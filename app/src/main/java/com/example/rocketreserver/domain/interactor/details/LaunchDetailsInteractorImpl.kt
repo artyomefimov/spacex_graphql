@@ -19,4 +19,8 @@ class LaunchDetailsInteractorImpl(
     override suspend fun cancelTrip(launchId: String): ResultWrapper<Unit> {
         return repository.cancelTrip(launchId)
     }
+
+    override fun getToken(): String {
+        return repository.getToken()
+    }
 }

@@ -10,4 +10,6 @@ interface LaunchDetailsInteractor {
     suspend fun bookTrip(launchId: String): ResultWrapper<Unit>
 
     suspend fun cancelTrip(launchId: String): ResultWrapper<Unit>
+
+    fun getToken(): String
 }

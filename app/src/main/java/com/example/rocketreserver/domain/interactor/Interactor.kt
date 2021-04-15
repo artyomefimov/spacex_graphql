@@ -4,5 +4,5 @@ import com.example.rocketreserver.domain.model.result.ResultWrapper
 
 interface Interactor<out T> {
 
-    operator fun invoke(param: String): ResultWrapper<T>
+    operator fun invoke(): ResultWrapper<T>
 }

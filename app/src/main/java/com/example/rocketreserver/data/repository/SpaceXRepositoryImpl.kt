@@ -6,6 +6,7 @@ import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
 import com.example.rocketreserver.*
 import com.example.rocketreserver.data.ext.checkErrors
+import com.example.rocketreserver.data.token.TokenStorage
 import com.example.rocketreserver.domain.mapper.Mapper
 import com.example.rocketreserver.domain.model.LaunchDetails
 import com.example.rocketreserver.domain.model.LaunchList
@@ -20,7 +21,8 @@ class SpaceXRepositoryImpl(
     private val apolloClient: ApolloClient,
     private val launchListMapper: Mapper<LaunchListQuery.Launches, LaunchList>,
     private val listDetailsMapper: Mapper<LaunchDetailsQuery.Launch, LaunchDetails>,
-    private val loginDetailsMapper: Mapper<LoginMutation.Data, LoginDetails>
+    private val loginDetailsMapper: Mapper<LoginMutation.Data, LoginDetails>,
+    private val tokenStorage: TokenStorage
 ) : SpaceXRepository {
 
     override suspend fun getLaunches(cursor: String?): ResultWrapper<LaunchList> {
@@ -61,6 +63,10 @@ class SpaceXRepositoryImpl(
                 .await()
                 .checkErrors { }
         }
+    }
+
+    override fun getToken(): String {
+        return tokenStorage.getToken()
     }
 
     private suspend fun <T> performCall(call: suspend () -> ResultWrapper<T>): ResultWrapper<T> {
