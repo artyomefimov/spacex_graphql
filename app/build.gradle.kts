@@ -50,9 +50,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.8.0")
     implementation("com.apollographql.apollo:apollo-runtime:2.5.6")
     implementation("com.apollographql.apollo:apollo-coroutines-support:2.5.6")
-    implementation("org.koin:koin-android:3.0.0-alpha-1")
-    implementation("org.koin:koin-android-ext:3.0.0-alpha-1")
-    implementation("org.koin:koin-android-viewmodel:3.0.0-alpha-1")
+    implementation("io.insert-koin:koin-android:3.0.1")
+    implementation("io.insert-koin:koin-android-ext:3.0.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")

@@ -10,10 +10,6 @@ import com.example.rocketreserver.domain.repository.SpaceXRepository
 import org.koin.dsl.module
 
 fun interactorModule() = module {
-    single<LaunchesListInteractor> {
-        val repo = get<SpaceXRepository>()
-        LaunchesListInteractorImpl(repo)
-    }
     single<LaunchDetailsInteractor> {
         LaunchDetailsInteractorImpl(repository = get())
     }

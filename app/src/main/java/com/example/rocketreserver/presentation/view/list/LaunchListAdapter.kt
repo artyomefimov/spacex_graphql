@@ -10,7 +10,7 @@ import com.example.rocketreserver.domain.model.LaunchList
 import com.example.rocketreserver.domain.model.LaunchListElement
 
 class LaunchListAdapter(
-    val launches: MutableList<LaunchListElement>,
+    private val launches: MutableList<LaunchListElement> = mutableListOf(),
     private val onEndOfListReached: () -> Unit,
     private val onItemClicked: (LaunchListElement) -> Unit
 ) : RecyclerView.Adapter<LaunchListViewHolder>() {
@@ -27,6 +27,12 @@ class LaunchListAdapter(
         if (position == launches.size - 1) {
             onEndOfListReached()
         }
+    }
+
+    fun swapData(items: List<LaunchListElement>) {
+        launches.clear()
+        launches.addAll(items)
+        notifyDataSetChanged()
     }
 }
 

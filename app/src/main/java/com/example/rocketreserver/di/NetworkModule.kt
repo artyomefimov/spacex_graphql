@@ -1,6 +1,7 @@
 package com.example.rocketreserver.di
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.subscription.SubscriptionTransport
 import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport
 import com.example.rocketreserver.data.api.AuthorizationInterceptor
 import okhttp3.OkHttpClient
@@ -19,7 +20,7 @@ fun networkModule() = module {
             .addInterceptor(get<AuthorizationInterceptor>())
             .build()
     }
-    single {
+    single< SubscriptionTransport.Factory> {
         WebSocketSubscriptionTransport.Factory(
             webSocketUrl = WEB_SOCKET_URL,
             get<OkHttpClient>()
