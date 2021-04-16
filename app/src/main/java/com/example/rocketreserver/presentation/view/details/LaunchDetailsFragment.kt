@@ -69,7 +69,7 @@ class LaunchDetailsFragment : Fragment() {
     private fun showLoading(isLoading: Boolean) {
         with(binding) {
             progressBar.isVisible = isLoading
-            contentGroup.isVisible = isLoading.not()
+            detailsContentGroup.isVisible = isLoading.not()
         }
     }
 
@@ -81,7 +81,7 @@ class LaunchDetailsFragment : Fragment() {
         with(binding) {
             errorView.isVisible = hasError
             progressBar.isVisible = hasError.not()
-            contentGroup.isVisible = hasError.not()
+            detailsContentGroup.isVisible = hasError.not()
         }
     }
 

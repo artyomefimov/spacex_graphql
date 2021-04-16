@@ -29,11 +29,6 @@ class MainActivity : AppCompatActivity() {
     private val tokenStorage by inject<TokenStorage>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            setTheme(R.style.DarkTheme);
-        } else {
-            setTheme(R.style.AppTheme);
-        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

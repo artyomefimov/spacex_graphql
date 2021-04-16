@@ -32,7 +32,7 @@ class LaunchListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.errorView.onRetryClicked = {
+        binding.launchesErrorView.onRetryClicked = {
             viewModel.loadLaunches()
         }
         adapter = LaunchListAdapter(
@@ -67,15 +67,15 @@ class LaunchListFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         with(binding) {
-            progressBar.isVisible = isLoading
+            launchesProgressBar.isVisible = isLoading
             launchesRecyclerView.isVisible = isLoading.not()
         }
     }
 
     private fun showError(hasError: Boolean) {
         with(binding) {
-            errorView.isVisible = hasError
-            progressBar.isVisible = hasError.not()
+            launchesErrorView.isVisible = hasError
+            launchesProgressBar.isVisible = hasError.not()
             launchesRecyclerView.isVisible = hasError.not()
         }
     }

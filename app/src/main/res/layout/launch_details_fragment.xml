@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/contentGroup"
+        android:id="@+id/detailsContentGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="missionPatch,missionName,rocketName,site,bookButton"/>

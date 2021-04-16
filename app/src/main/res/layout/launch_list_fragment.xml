@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/launchesProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminateTint="@color/colorPrimary"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.rocketreserver.presentation.view.ErrorView
-        android:id="@+id/errorView"
+        android:id="@+id/launchesErrorView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"

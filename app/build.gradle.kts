@@ -15,6 +15,7 @@ android {
         targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     
     buildFeatures {
@@ -54,8 +55,12 @@ dependencies {
     implementation("io.insert-koin:koin-android-ext:3.0.1")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("io.insert-koin:koin-test-junit4:3.0.1")
+    testImplementation("org.mockito:mockito-inline:3.4.4")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    androidTestImplementation("com.kaspersky.android-components:kaspresso:1.1.0")
 }
 
 apollo {
