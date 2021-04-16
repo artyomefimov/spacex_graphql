@@ -23,6 +23,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      # run detekt
+      - name: Run detekt
+        run: ./gradlew detekt
+
       - name: Run some unit tests
         run: ./gradlew test
 

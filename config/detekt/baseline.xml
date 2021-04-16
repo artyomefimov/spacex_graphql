@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues />
+  <CurrentIssues>
+    <ID>MagicNumber:MainActivity.kt$MainActivity$1000</ID>
+    <ID>MagicNumber:build.gradle.kts$23</ID>
+    <ID>MagicNumber:build.gradle.kts$30</ID>
+    <ID>TooGenericExceptionCaught:SpaceXRepositoryImpl.kt$SpaceXRepositoryImpl$e: Throwable</ID>
+    <ID>TooManyFunctions:LaunchDetailsViewModel.kt$LaunchDetailsViewModel : ViewModel</ID>
+  </CurrentIssues>
+</SmellBaseline>
