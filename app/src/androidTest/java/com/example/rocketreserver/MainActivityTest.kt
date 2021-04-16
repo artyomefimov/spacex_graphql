@@ -19,7 +19,7 @@ class MainActivityTest : TestCase() {
     val activityRule = ActivityTestRule(MainActivity::class.java, true, false)
 
     @Test
-    fun progressBarIsShownWhileLaunchesLoading() {
+    fun mainScenarioTest() {
         before {
             activityRule.launchActivity(null)
         }.after {
