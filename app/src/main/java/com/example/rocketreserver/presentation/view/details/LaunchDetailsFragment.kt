@@ -35,6 +35,7 @@ class LaunchDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.launchId = args.launchId
+        viewModel.loadLaunchDetails()
         binding.errorView.onRetryClicked = {
             viewModel.performBookOperation()
         }

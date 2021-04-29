@@ -1,7 +1,5 @@
 package com.example.rocketreserver.domain.model.result
 
-import java.lang.Exception
-
 sealed class ResultWrapper<out T> {
 
     open val isSuccess: Boolean = true

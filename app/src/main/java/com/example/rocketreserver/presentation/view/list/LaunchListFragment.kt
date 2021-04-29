@@ -54,6 +54,8 @@ class LaunchListFragment : Fragment() {
         lifecycleScope.launchWhenResumed {
             viewModel.loadingState().collect(::showLoading)
         }
+
+        viewModel.loadLaunches()
     }
 
     override fun onDestroyView() {
