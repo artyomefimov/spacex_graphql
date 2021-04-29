@@ -1,5 +1,6 @@
 package com.example.rocketreserver.presentation.viewmodel.details
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rocketreserver.R
@@ -26,16 +27,13 @@ class LaunchDetailsViewModel(
     private val rocketInfoState = MutableStateFlow("")
     private val navigateEventState = MutableStateFlow(Event<Unit?>(null))
 
-    private var isBooked = false
+    @VisibleForTesting
+    internal var isBooked = false
         set(value) {
             field = value
             resolveButtonText(value)
         }
     var launchId = ""
-
-    init {
-        loadLaunchDetails()
-    }
 
     fun launchDetailsState(): StateFlow<LaunchDetails?> = launchDetailsState
     fun loadingState(): StateFlow<Boolean> = loadingState
@@ -58,31 +56,26 @@ class LaunchDetailsViewModel(
         }
     }
 
-    private fun loadLaunchDetails() {
-        viewModelScope.launch {
-            errorState.value = false
-            loadingState.value = true
-            interactor.getLaunchDetails(launchId).collect(
-                onSuccess = { result ->
-                    launchDetailsState.value = result.data
-                    isBooked = result.data.isBooked
-                    resolveRocketInfo(result.data.rocket)
-                    loadingState.value = false
-                },
-                onError = {
-                    errorState.value = true
-                    loadingState.value = false
-                }
-            )
-        }
+    fun loadLaunchDetails() = viewModelScope.launch {
+        errorState.value = false
+        loadingState.value = true
+        interactor.getLaunchDetails(launchId).collect(
+            onSuccess = { result ->
+                launchDetailsState.value = result.data
+                isBooked = result.data.isBooked
+                resolveRocketInfo(result.data.rocket)
+                loadingState.value = false
+            },
+            onError = {
+                errorState.value = true
+                loadingState.value = false
+            }
+        )
     }
 
     private fun resolveRocketInfo(rocket: Rocket) {
-        rocketInfoState.value = resourcesProvider.getString(
-            R.string.rocketName,
-            rocket.name,
-            rocket.type
-        )
+        rocketInfoState.value = resourcesProvider.getString(R.string.rocketName)
+            .format(rocket.name, rocket.type)
     }
 
     private fun resolveButtonText(isBooked: Boolean) {
@@ -93,35 +86,31 @@ class LaunchDetailsViewModel(
         }
     }
 
-    private fun bookTrip() {
-        viewModelScope.launch {
-            buttonLoadingState.value = true
-            interactor.bookTrip(launchId).collect(
-                onSuccess = {
-                    isBooked = true
-                    buttonLoadingState.value = false
-                },
-                onError = {
-                    errorState.value = true
-                    buttonLoadingState.value = false
-                }
-            )
-        }
+    private fun bookTrip() = viewModelScope.launch {
+        buttonLoadingState.value = true
+        interactor.bookTrip(launchId).collect(
+            onSuccess = {
+                isBooked = true
+                buttonLoadingState.value = false
+            },
+            onError = {
+                errorState.value = true
+                buttonLoadingState.value = false
+            }
+        )
     }
 
-    private fun cancelTrip() {
-        viewModelScope.launch {
-            buttonLoadingState.value = true
-            interactor.cancelTrip(launchId).collect(
-                onSuccess = {
-                    isBooked = false
-                    buttonLoadingState.value = false
-                },
-                onError = {
-                    errorState.value = true
-                    buttonLoadingState.value = false
-                }
-            )
-        }
+    private fun cancelTrip() = viewModelScope.launch {
+        buttonLoadingState.value = true
+        interactor.cancelTrip(launchId).collect(
+            onSuccess = {
+                isBooked = false
+                buttonLoadingState.value = false
+            },
+            onError = {
+                errorState.value = true
+                buttonLoadingState.value = false
+            }
+        )
     }
 }

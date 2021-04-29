@@ -1,6 +1,5 @@
 package com.example.rocketreserver.presentation.viewmodel.login
 
-import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,11 +11,24 @@ import com.example.rocketreserver.presentation.resources.ResourcesProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 class LoginViewModel(
     private val interactor: LoginInteractor,
     private val resourcesProvider: ResourcesProvider
-): ViewModel() {
+) : ViewModel() {
+
+    private companion object {
+        val pattern: Pattern = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
+        )
+    }
 
     private val errorTextState = MutableStateFlow("")
     private val buttonLoadingState = MutableStateFlow(false)
@@ -50,5 +62,5 @@ class LoginViewModel(
         }
     }
 
-    private fun notValidEmail(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches().not()
+    private fun notValidEmail(email: String) = pattern.matcher(email).matches().not()
 }

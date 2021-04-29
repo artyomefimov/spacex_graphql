@@ -1,7 +1,5 @@
 package com.example.rocketreserver.presentation.viewmodel.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rocketreserver.domain.ext.collect
@@ -20,10 +18,6 @@ class LaunchesListViewModel(
     private val errorState = MutableStateFlow(false)
     private var cursor: String? = null
     private var hasMore: Boolean = true
-
-    init {
-        loadLaunches()
-    }
 
     fun launchesState(): StateFlow<List<LaunchListElement>> = launchesState
     fun loadingState(): StateFlow<Boolean> = loadingState
