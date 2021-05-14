@@ -10,11 +10,14 @@ import com.example.rocketreserver.domain.model.LaunchDetails
 import com.example.rocketreserver.domain.model.Rocket
 import com.example.rocketreserver.presentation.model.Event
 import com.example.rocketreserver.presentation.resources.ResourcesProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LaunchDetailsViewModel(
+@HiltViewModel
+class LaunchDetailsViewModel @Inject constructor(
     private val interactor: LaunchDetailsInteractor,
     private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {

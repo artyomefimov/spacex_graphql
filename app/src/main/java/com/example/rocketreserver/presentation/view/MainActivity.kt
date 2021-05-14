@@ -18,15 +18,21 @@ import com.example.rocketreserver.R
 import com.example.rocketreserver.TripsBookedSubscription
 import com.example.rocketreserver.data.token.TokenStorage
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.retryWhen
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var apolloClient: ApolloClient
+    @Inject
+    lateinit var tokenStorage: TokenStorage
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val apolloClient by inject<ApolloClient>()
-    private val tokenStorage by inject<TokenStorage>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +48,9 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 .collect {
-                    val trips = it.data?.tripsBooked
-                    val text = when {
-                        trips == null -> getString(R.string.subscriptionError)
-                        trips == -1 -> getString(R.string.tripCancelled)
+                    val text = when (val trips = it.data?.tripsBooked) {
+                        null -> getString(R.string.subscriptionError)
+                        -1 -> getString(R.string.tripCancelled)
                         else -> getString(R.string.tripBooked, trips)
                     }
                     Snackbar.make(
@@ -71,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
             recreate()
         }

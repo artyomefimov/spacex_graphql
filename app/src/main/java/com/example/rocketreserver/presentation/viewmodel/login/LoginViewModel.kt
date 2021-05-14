@@ -1,6 +1,5 @@
 package com.example.rocketreserver.presentation.viewmodel.login
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rocketreserver.R
@@ -8,12 +7,15 @@ import com.example.rocketreserver.domain.ext.collect
 import com.example.rocketreserver.domain.interactor.login.LoginInteractor
 import com.example.rocketreserver.presentation.model.Event
 import com.example.rocketreserver.presentation.resources.ResourcesProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val interactor: LoginInteractor,
     private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {

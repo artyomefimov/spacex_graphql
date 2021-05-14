@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,13 +17,14 @@ import com.example.rocketreserver.databinding.LaunchDetailsFragmentBinding
 import com.example.rocketreserver.domain.model.LaunchDetails
 import com.example.rocketreserver.presentation.ext.collectEvent
 import com.example.rocketreserver.presentation.viewmodel.details.LaunchDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class LaunchDetailsFragment : Fragment() {
     private lateinit var binding: LaunchDetailsFragmentBinding
     private val args: LaunchDetailsFragmentArgs by navArgs()
-    private val viewModel by viewModel<LaunchDetailsViewModel>()
+    private val viewModel: LaunchDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

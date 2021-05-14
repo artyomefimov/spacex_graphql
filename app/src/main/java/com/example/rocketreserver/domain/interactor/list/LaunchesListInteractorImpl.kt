@@ -3,8 +3,9 @@ package com.example.rocketreserver.domain.interactor.list
 import com.example.rocketreserver.domain.model.LaunchList
 import com.example.rocketreserver.domain.model.result.ResultWrapper
 import com.example.rocketreserver.domain.repository.SpaceXRepository
+import javax.inject.Inject
 
-class LaunchesListInteractorImpl(
+class LaunchesListInteractorImpl @Inject constructor(
     private val repository: SpaceXRepository
 ): LaunchesListInteractor {
 

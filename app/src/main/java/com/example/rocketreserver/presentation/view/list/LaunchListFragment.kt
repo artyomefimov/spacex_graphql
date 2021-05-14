@@ -4,23 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rocketreserver.databinding.LaunchListFragmentBinding
 import com.example.rocketreserver.domain.model.LaunchListElement
-import com.example.rocketreserver.presentation.ext.collectEvent
 import com.example.rocketreserver.presentation.viewmodel.list.LaunchesListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class LaunchListFragment : Fragment() {
 
     private lateinit var binding: LaunchListFragmentBinding
     private var adapter: LaunchListAdapter? = null
-    private val viewModel by viewModel<LaunchesListViewModel>()
+    private val viewModel: LaunchesListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -7,6 +7,7 @@ import com.apollographql.apollo.coroutines.await
 import com.example.rocketreserver.*
 import com.example.rocketreserver.data.ext.checkErrors
 import com.example.rocketreserver.data.token.TokenStorage
+import com.example.rocketreserver.di.data.IoDispatcher
 import com.example.rocketreserver.domain.mapper.Mapper
 import com.example.rocketreserver.domain.model.LaunchDetails
 import com.example.rocketreserver.domain.model.LaunchList
@@ -15,9 +16,10 @@ import com.example.rocketreserver.domain.model.result.ResultWrapper
 import com.example.rocketreserver.domain.repository.SpaceXRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class SpaceXRepositoryImpl(
-    private val dispatcher: CoroutineDispatcher,
+class SpaceXRepositoryImpl @Inject constructor(
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val apolloClient: ApolloClient,
     private val launchListMapper: Mapper<LaunchListQuery.Launches, LaunchList>,
     private val listDetailsMapper: Mapper<LaunchDetailsQuery.Launch, LaunchDetails>,

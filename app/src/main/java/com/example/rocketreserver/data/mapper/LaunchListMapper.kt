@@ -4,8 +4,10 @@ import com.example.rocketreserver.LaunchListQuery
 import com.example.rocketreserver.domain.mapper.Mapper
 import com.example.rocketreserver.domain.model.LaunchList
 import com.example.rocketreserver.domain.model.LaunchListElement
+import javax.inject.Inject
 
-class LaunchListMapper : Mapper<LaunchListQuery.Launches, LaunchList> {
+class LaunchListMapper @Inject constructor(
+) : Mapper<LaunchListQuery.Launches, LaunchList> {
 
     override fun map(input: LaunchListQuery.Launches): LaunchList {
         return LaunchList(

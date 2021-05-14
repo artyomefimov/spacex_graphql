@@ -1,5 +1,5 @@
 * apollographql
-* koin
+* ~~koin~~ Hilt
 * kaspresso
 * coil
 * androidx.navigation

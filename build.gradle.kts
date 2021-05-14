@@ -1,15 +1,15 @@
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.0")
+        classpath("com.android.tools.build:gradle:4.0.2")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.16.0")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.35")
     }
 }
 
@@ -27,9 +27,6 @@ detekt {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
-
-        maven(url = "https://dl.bintray.com/ekito/koin")
     }
 }

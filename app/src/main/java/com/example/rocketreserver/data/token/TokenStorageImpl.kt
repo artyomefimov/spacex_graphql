@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class TokenStorageImpl(
-    private val context: Context
-): TokenStorage {
+class TokenStorageImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : TokenStorage {
 
     private companion object {
         const val KEY_TOKEN = "TOKEN"

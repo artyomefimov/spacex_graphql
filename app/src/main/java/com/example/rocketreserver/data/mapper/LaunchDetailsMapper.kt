@@ -4,8 +4,10 @@ import com.example.rocketreserver.LaunchDetailsQuery
 import com.example.rocketreserver.domain.mapper.Mapper
 import com.example.rocketreserver.domain.model.LaunchDetails
 import com.example.rocketreserver.domain.model.Rocket
+import javax.inject.Inject
 
-class LaunchDetailsMapper : Mapper<LaunchDetailsQuery.Launch, LaunchDetails> {
+class LaunchDetailsMapper @Inject constructor(
+) : Mapper<LaunchDetailsQuery.Launch, LaunchDetails> {
 
     override fun map(input: LaunchDetailsQuery.Launch): LaunchDetails {
         return LaunchDetails(

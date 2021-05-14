@@ -6,18 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rocketreserver.R
 import com.example.rocketreserver.databinding.LoginFragmentBinding
 import com.example.rocketreserver.presentation.ext.collectEvent
 import com.example.rocketreserver.presentation.viewmodel.login.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: LoginFragmentBinding
-    private val viewModel by viewModel<LoginViewModel>()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = LoginFragmentBinding.inflate(inflater, container, false)
